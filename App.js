@@ -7,7 +7,7 @@ import Product from './product';
 
 AppRegistry.registerComponent(appName, () => App);
 const Stack = createStackNavigator();
-
+// burada ik sayfa olarak ekleme formu geelcek
 export default function App() {
   return (
     <NavigationContainer>
