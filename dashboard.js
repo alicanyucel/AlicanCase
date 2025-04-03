@@ -137,4 +137,4 @@ const styles = StyleSheet.create({
   tabButton: { padding: 8 }
 });
 
-export default App;
+export default Dashboard;
