@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Senior - Selçuk Übiversitesi Bilgisayar Mühendisi</Text>
+      <Text>Middle - Selçuk Übiversitesi Bilgisayar Mühendisi</Text>
       <StatusBar style="auto" />
     </View>
   );
