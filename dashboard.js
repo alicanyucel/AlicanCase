@@ -2,7 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
 
-const db = SQLite.openDatabase({ name: 'inventory.db', location: 'default' }, () => {}, error => console.log(error));
+const db = SQLite.openDatabase({ name: 'inventory.db', location: 'default' }, () => {
+  db.transaction(tx => {
+    tx.executeSql(
+      'CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY AUTOINCREMENT, materialName TEXT, stockCode TEXT, quantity INTEGER);',
+      [],
+      () => console.log('Table created successfully'),
+      error => console.log('Error creating table', error)
+    );
+  });
+}, error => console.log(error));
 
 const App = () => {
   return (
