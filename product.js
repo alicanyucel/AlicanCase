@@ -4,7 +4,7 @@ import SQLite from 'react-native-sqlite-storage';
 import { useNavigation } from '@react-navigation/native';
 
 const db = SQLite.openDatabase(
-  { name: 'product_database.db', location: 'default' },
+  { name: 'inventory.db', location: 'default' },
   () => console.log('Veritabanı bağlantısı başarılı'),
   (error) => console.log('Veritabanı bağlantısı hatası: ', error)
 );
