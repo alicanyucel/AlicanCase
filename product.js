@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, Button, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, ScrollView, Alert } from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
 import { useNavigation } from '@react-navigation/native';
 
@@ -10,9 +10,9 @@ const db = SQLite.openDatabase(
   (error) => console.log('Veritabanı bağlantısı hatası: ', error)
 );
 
-const Product = () => {
+const ProductScreen = () => {
   const navigation = useNavigation();
-  
+
   const [materialName, setMaterialName] = useState('');
   const [stockCode, setStockCode] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -54,7 +54,7 @@ const Product = () => {
       await insertProduct(product);
       console.log('Ürün eklendi:', product);
       Alert.alert('Success', 'Ürün başarıyla eklendi');
-      navigation.navigate('Dashboard');
+      navigation.navigate('Home'); // Ana sayfaya yönlendir
     } catch (error) {
       Alert.alert('Error', `Hata: ${error.message}`);
     }
@@ -63,7 +63,6 @@ const Product = () => {
   // Veritabanı tablosunu oluşturma
   useEffect(() => {
     db.transaction((tx) => {
-      // Tabloyu oluşturuyor
       tx.executeSql(
         'CREATE TABLE IF NOT EXISTS products (' +
         'id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
@@ -133,4 +132,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Product;
+export default ProductScreen;
