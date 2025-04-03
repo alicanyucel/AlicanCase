@@ -3,6 +3,7 @@ import { Text, TextInput, Button, StyleSheet, ScrollView, Alert } from 'react-na
 import SQLite from 'react-native-sqlite-storage';
 import { useNavigation } from '@react-navigation/native';
 
+// Veritabanı bağlantısını başlatma
 const db = SQLite.openDatabase(
   { name: 'inventory.db', location: 'default' },
   () => console.log('Veritabanı bağlantısı başarılı'),
@@ -16,6 +17,7 @@ const Product = () => {
   const [stockCode, setStockCode] = useState('');
   const [quantity, setQuantity] = useState('');
 
+  // Ürün verilerini veritabanına ekleme
   const insertProduct = (product) => {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -29,6 +31,7 @@ const Product = () => {
     });
   };
 
+  // Formu gönderme işlemi
   const handleSubmit = async () => {
     if (!materialName || !stockCode || !quantity) {
       Alert.alert('Error', 'Tüm istenilenleri doldurun');
@@ -50,7 +53,6 @@ const Product = () => {
     try {
       await insertProduct(product);
       console.log('Ürün eklendi:', product);
-
       Alert.alert('Success', 'Ürün başarıyla eklendi');
       navigation.navigate('Dashboard');
     } catch (error) {
@@ -58,10 +60,22 @@ const Product = () => {
     }
   };
 
+  // Veritabanı tablosunu oluşturma
   useEffect(() => {
     db.transaction((tx) => {
+      // Tabloyu oluşturuyor
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY AUTOINCREMENT, materialName TEXT, stockCode TEXT, quantity INTEGER);'
+        'CREATE TABLE IF NOT EXISTS products (' +
+        'id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+        'materialName TEXT, ' +
+        'stockCode TEXT, ' +
+        'quantity INTEGER);',
+        [],
+        () => console.log('Tablo başarıyla oluşturuldu'),
+        (tx, error) => {
+          console.log('Tablo oluşturulurken hata:', error);
+          return true;
+        }
       );
     });
   }, []);
